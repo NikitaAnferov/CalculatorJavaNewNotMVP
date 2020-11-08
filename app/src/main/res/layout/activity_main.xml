@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/math_operation"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:textColor="@android:color/white"
+        android:gravity="end"
+        android:ellipsize="start"
+        android:textSize="40sp"
+        android:singleLine="true"
+        />
+
+
+    <TextView
+        android:id="@+id/result_text"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:textColor="@android:color/white"
+        android:gravity="end"
+        android:ellipsize="end"
+        android:textSize="30sp"
+        android:singleLine="true"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+
+            <TextView
+                style="@style/NumberButton"
+                android:clickable="true"
+                android:id="@+id/btn_ac"
+                android:text="@string/ac"
+                android:focusable="true" />
+
+            <TextView
+                style="@style/NumberButton"
+                android:clickable="true"
+                android:id="@+id/btn_left_parenthesis"
+                android:text="@string/leftParenthesis"
+                android:focusable="true" />
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_right_parenthesis"
+                android:clickable="true"
+                android:text="@string/rightParenthesis"
+                android:focusable="true" />
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_slash"
+                android:clickable="true"
+                android:text="@string/slash"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:focusable="true">
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_7"
+                android:text="@string/seven"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_8"
+                android:text="@string/eight"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_9"
+                android:text="@string/nine"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_multiplication"
+                android:text="@string/multiplication"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_4"
+                android:text="@string/four"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_5"
+                android:text="@string/five"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_6"
+                android:text="@string/six"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_plus"
+                android:text="@string/plus"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_1"
+                android:text="@string/one"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_2"
+                android:text="@string/two"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_3"
+                android:text="@string/three"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_minus"
+                android:text="@string/minus"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_point"
+                android:text="@string/point"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_0"
+                android:text="@string/zero"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/ActionButton"
+                android:id="@+id/btn_back"
+                android:text="@string/back"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                style="@style/NumberButton"
+                android:id="@+id/btn_equal"
+                android:text="@string/equal"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
