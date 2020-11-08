@@ -17,14 +17,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView math_operation;
 
     int [] btn_id = new int[] {R.id.btn_0, R.id.btn_1, R.id.btn_2, R.id.btn_3, R.id.btn_4,
-            R.id.btn_5, R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9, R.id.btn_minus, R.id.btn_plus,
+            R.id.btn_5, R.id.btn_6, R.id.btn_7, R.id.btn_8, R.id.btn_9, R.id.btn_point, R.id.btn_minus, R.id.btn_plus,
             R.id.btn_slash, R.id.btn_multiplication, R.id.btn_left_parenthesis, R.id.btn_right_parenthesis,
             R.id.btn_ac, R.id.btn_back, R.id.btn_equal};
 
-    TextView [] textView_array = new TextView[19];
+    TextView [] textView_array = new TextView[btn_id.length];
 
     String [] signs = new String [] {"+","-","*","/"}; // массив знаков, для проверки, если этот знак последний в строке
                                                                 // то другой поставить нельзя
+
 
 
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             textView_array[i] = findViewById(btn_id[i]);
             textView_array[i].setOnClickListener(this);
         }
+
+
 
         result_text = findViewById(R.id.result_text);
         math_operation = findViewById(R.id.math_operation);
@@ -77,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_9:
                 setTextFiled("9");
+                break;
+            case R.id.btn_point:
+                addPoint();
                 break;
 
             case R.id.btn_minus:
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn_equal:
                 try {
+                    parenthesisClose();
                     Expression ex = new Expression(new ExpressionBuilder(math_operation.getText().toString()).build());
                     double result = ex.evaluate();
 
@@ -168,6 +175,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void inputZero() {
         math_operation.setText("0");
+    }
+
+    private void parenthesisClose() {
+
+        String line = math_operation.getText().toString();
+        int countParenthesis = 0;
+
+        for(int i = 0; i < line.length(); i++) {
+            if(line.charAt(i) == '(') {
+                countParenthesis++;
+            }
+            if(line.charAt(i) == ')') {
+                countParenthesis--;
+            }
+        }
+
+        for(int i = 0; i < countParenthesis; i++) {
+            math_operation.append(")");
+        }
+
+    }
+
+    private void addPoint() {
+        String line = math_operation.getText().toString();
+        int numbers = 0;
+        for(int i = line.length() - 1; i > -1; i--) {
+            try {
+                Integer.parseInt(String.valueOf(line.charAt(i)));
+                numbers++;
+            } catch (NumberFormatException e) {
+                if (line.charAt(i) == '.') {
+                    numbers = 0;
+                }
+                break;
+            }
+        }
+
+        if(numbers > 0) {
+            math_operation.append(".");
+        }
+
     }
 
 }
