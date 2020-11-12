@@ -1,9 +1,9 @@
 package space.anferov.calculatorinjavanewpart;
+
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,109 +50,86 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_0:
-                setTextFiled("0");
-                break;
-            case R.id.btn_1:
-                setTextFiled("1");
-                break;
-            case R.id.btn_2:
-                setTextFiled("2");
-                break;
-            case R.id.btn_3:
-                setTextFiled("3");
-                break;
-            case R.id.btn_4:
-                setTextFiled("4");
-                break;
-            case R.id.btn_5:
-                setTextFiled("5");
-                break;
-            case R.id.btn_6:
-                setTextFiled("6");
-                break;
-            case R.id.btn_7:
-                setTextFiled("7");
-                break;
-            case R.id.btn_8:
-                setTextFiled("8");
-                break;
-            case R.id.btn_9:
-                setTextFiled("9");
-                break;
-            case R.id.btn_point:
-                addPoint();
-                break;
+        try{
+            String buttonText = ((TextView) v).getText().toString();
+            switch (buttonText) {
+                case ".":
+                    setTextFiled(buttonText);
+                    deletePoint();
+                    break;
 
-            case R.id.btn_minus:
-                repeatSign();
-                setTextFiled("-");
-                break;
-            case R.id.btn_plus:
-                repeatSign();
-                setTextFiled("+");
-                break;
-            case R.id.btn_slash:
-                repeatSign();
-                setTextFiled("/");
-                break;
-            case R.id.btn_multiplication:
-                repeatSign();
-                setTextFiled("*");
-                break;
-            case R.id.btn_left_parenthesis:
-                setTextFiled("(");
-                break;
-            case R.id.btn_right_parenthesis:
-                setTextFiled(")");
-                break;
+                case "-":
+                case "+":
+                case "/":
+                case "*":
+                    repeatSign();
+                    setTextFiled(buttonText);
+                    break;
 
-            case R.id.btn_ac:
-                math_operation.setText("");
-                result_text.setText("");
-                break;
+                case "(":
+                case ")":
+                    setTextFiled(buttonText);
+                    break;
 
-            case R.id.btn_back:
-                String str = math_operation.getText().toString();
-                if (!str.equals("")) {
-                    math_operation.setText(str.substring(0, str.length() - 1));
-                }
-                result_text.setText("");
-                break;
+                case "AC":
+                    math_operation.setText("");
+                    result_text.setText("");
+                    break;
 
-            case R.id.btn_equal:
-                try {
-                    parenthesisClose();
-                    Expression ex = new Expression(new ExpressionBuilder(math_operation.getText().toString()).build());
-                    double result = ex.evaluate();
+                case "Back":
+                    String str = math_operation.getText().toString();
+                    if (!str.equals("")) {
+                        math_operation.setText(str.substring(0, str.length() - 1));
+                    }
+                    result_text.setText("");
+                    break;
+
+                case "=":
+                    try {
+                        parenthesisClose();
+                        String line  = math_operation.getText().toString();
+                        if (!line.substring(line.length()-1).matches("[0-9]|[.]"))
+                            line = line.substring(0,line.length()-1);
+                        Expression ex = new Expression(new ExpressionBuilder(line).build());
+                        double result = ex.evaluate();
 
 
-                    long longRes = (long) result;
-                    if (result == (double) longRes)
-                        result_text.setText(String.valueOf(longRes));
-                    else
-                        result_text.setText(String.valueOf(result));
-                } catch (Exception e) {
-                    result_text.setText(R.string.error);
-                }
+                        long longRes = (long) result;
+                        if (result == (double) longRes)
+                            result_text.setText(String.valueOf(longRes));
+                        else
+                            result_text.setText(String.valueOf(result));
+                    } catch (Exception e) {
+                        result_text.setText(R.string.error);
+                    }
 
-                break;
+                    break;
+                default:
+                    setTextFiled(buttonText);
+                    break;
+            }
+        } catch (Exception ignored) {
+
         }
+
     }
 
 
 
     private void setTextFiled(String str) {
         if(result_text.getText() != "") {
+            math_operation.setText("");
             Resources myResources = getResources();
             if (result_text.getText() != myResources.getText(R.string.error)) {
-                math_operation.setText(result_text.getText());
+                if (str.matches("[0-9]|[().]")) {
+                    math_operation.setText("");
+                } else {
+                    math_operation.append(result_text.getText());
+                }
+            } else if (!str.matches("[0-9]|[().]")) {
+                    math_operation.append("0");
+                }
 
-            }
-            else {
-                inputZero(); // записываем в math_operation 0
-            }
             result_text.setText("");
         }
         math_operation.append(str);
@@ -161,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void repeatSign() {
         String math_operation_line = math_operation.getText().toString();
         if (math_operation_line.equals("")){
-            inputZero(); // записываем в math_operation 0
+            math_operation.append("0"); // записываем в math_operation 0
             return;
         }
         String math_operation_symbol = math_operation_line.substring(math_operation_line.length() - 1);
@@ -173,9 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void inputZero() {
-        math_operation.setText("0");
-    }
 
     private void parenthesisClose() {
 
@@ -197,23 +171,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void addPoint() {
+
+
+    private void deletePoint(){
         String line = math_operation.getText().toString();
         int numbers = 0;
-        for(int i = line.length() - 1; i > -1; i--) {
+        int points = 0;
+        for(int i = line.length() - 1; i > -1 ; i--) {
             try {
                 Integer.parseInt(String.valueOf(line.charAt(i)));
                 numbers++;
             } catch (NumberFormatException e) {
                 if (line.charAt(i) == '.') {
-                    numbers = 0;
+                    points++;
+                } else {
+                    break;
                 }
-                break;
             }
         }
 
-        if(numbers > 0) {
-            math_operation.append(".");
+        if(points == 1 && numbers == 0) {
+            math_operation.setText(line.substring(0, line.length() - 1));
+            math_operation.append("0.");
+        } else if(points == 2 && numbers > 0) {
+            math_operation.setText(line.substring(0,line.length() - 1));
         }
 
     }
