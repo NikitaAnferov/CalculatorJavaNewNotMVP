@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     try { // обработчик ошибок
                         parenthesisClose(); // метод закрывающий все открытые скобки
                         String line  = math_operation.getText().toString(); // записываем в переменную значение поля для математических вычислений
-                        if (!line.substring(line.length()-1).matches("[0-9]|[.]")) // если последний символ в строке не точка и не число
+                        if (!line.substring(line.length()-1).matches("[0-9]|[().]")) // если последний символ в строке не точка и не число и не скобка
                             line = line.substring(0,line.length()-1); // удаляем последний символ (он является математическим знаком, вызовет ошибку при вычислении если его не удалить)
                         Expression ex = new Expression(new ExpressionBuilder(line).build()); // создаем экземпляр для вычислени переданного выражения
                         double result = ex.evaluate(); // получаем результат вычисления выражения
